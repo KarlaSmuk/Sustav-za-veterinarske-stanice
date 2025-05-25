@@ -18,7 +18,7 @@ export type UpdateUserDto = {
 
 export type CreatePetDto = {
     name: string;
-    dateOfBirth: Date;
+    dob: string;
     neutered: boolean;
     gender: string;
     color: string;
