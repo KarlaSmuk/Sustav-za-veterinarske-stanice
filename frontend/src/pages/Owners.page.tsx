@@ -81,7 +81,7 @@ export default function Owners() {
   };
 
   const handleRowClick = (id: string) => {
-    navigate(`/owner/${id}`);
+    navigate(`/owners/${id}`);
   };
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
