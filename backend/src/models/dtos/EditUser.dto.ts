@@ -1,6 +1,6 @@
 import { IsBase64, IsEmail, IsNotEmpty, IsOptional, IsString, IsUUID, ValidateIf } from 'class-validator';
 
-export class EditOwnerDto {
+export class EditUserDto {
 
     @IsUUID()
     @IsNotEmpty()

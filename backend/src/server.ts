@@ -7,6 +7,7 @@ import express, { Express } from 'express';
 import bodyParser from 'body-parser';
 import ownerRoute from './routes/owner.router';
 import { AppDataSource } from './config/db';
+import userRoute from './routes/user.router';
 
 const app: Express = express();
 
@@ -17,6 +18,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cors());
 
 app.use('/api/owner', ownerRoute)
+app.use('/api/user', userRoute)
 
 AppDataSource.initialize()
     .then(() => {
