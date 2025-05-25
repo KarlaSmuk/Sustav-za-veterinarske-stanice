@@ -174,7 +174,6 @@ export default function Owners() {
                   >
                     <Td verticalAlign={"end"}>
                       <Avatar
-                        //src={`https://lh3.googleusercontent.com/d/${owner.user.photo}`}
                         name={`${owner.user.firstName} ${owner.user.lastName}`}
                       />
                     </Td>
