@@ -78,8 +78,6 @@ export default function CreatePetModal({
     try {
       const response = await getBreedsBySpeciesId(speciesId);
       setBreeds(response);
-      console.log(response);
-      console.log(breeds);
     } catch (error) {
       console.error("Error geting clinics:", error);
     }
@@ -118,7 +116,6 @@ export default function CreatePetModal({
       [name]: value,
     }));
 
-    console.log(pet);
   };
 
   const handleNeuteredChange = (newValue: string) => {
@@ -145,7 +142,6 @@ export default function CreatePetModal({
   const handleSubmit = async (event: MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     try {
-      console.log(pet);
       const response = await createPet(pet, ownerId);
       if (response) {
         addNewPet(response);

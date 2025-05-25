@@ -43,7 +43,6 @@ export default function Pets() {
   const fetchPetsForOwner = async () => {
     try {
       const response = await getPetsByOwnerId(params.ownerId!);
-      console.log(response);
       setPets(response);
     } catch (error) {
       console.error("Error fetching pets:", error);
@@ -78,7 +77,6 @@ export default function Pets() {
 
   const deletePet = async (petId: string) => {
     try {
-      console.log(petId);
       const response = await deletePetById(petId);
       if (response.success) {
         setPets((prev) => prev.filter((pet) => pet.id !== petId));
