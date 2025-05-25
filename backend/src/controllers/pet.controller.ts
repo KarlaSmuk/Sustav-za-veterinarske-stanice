@@ -35,11 +35,13 @@ export const createPet: RequestHandler = async (req, res) => {
         }
 
         //Check if the breed exists within the species, if not create it
-        let breedEntity = await breedRepository
-            .findOneBy({
+        let breedEntity = await breedRepository.findOne({
+            where: {
                 name: dto.breedName,
-                species: speciesEntity
-            });
+                species: { id: speciesEntity.id }
+            },
+            relations: ["species"]
+        });
 
         if (!breedEntity) {
             breedEntity = await breedRepository
@@ -51,9 +53,22 @@ export const createPet: RequestHandler = async (req, res) => {
         const createdPet = await petRepository
             .save(new Pet(dto.name, dto.dob, dto.neutered, dto.gender, dto.color, owner, breedEntity))
 
+        const responsePet = {
+            ...createdPet,
+            breed: {
+                id: breedEntity.id,
+                name: breedEntity.name,
+                species: {
+                    id: speciesEntity.id,
+                    name: speciesEntity.name
+                }
+            }
+        };
+
+
         res.status(200).json({
             success: true,
-            message: createdPet
+            message: responsePet
         });
     } catch (error: unknown) {
         if (error instanceof Error) {

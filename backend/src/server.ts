@@ -8,6 +8,7 @@ import bodyParser from 'body-parser';
 import ownerRoute from './routes/owner.router';
 import { AppDataSource } from './config/db';
 import userRoute from './routes/user.router';
+import petRoute from './routes/pet.router';
 
 const app: Express = express();
 
@@ -19,6 +20,7 @@ app.use(cors());
 
 app.use('/api/owner', ownerRoute)
 app.use('/api/user', userRoute)
+app.use('/api/pet', petRoute)
 
 AppDataSource.initialize()
     .then(() => {
