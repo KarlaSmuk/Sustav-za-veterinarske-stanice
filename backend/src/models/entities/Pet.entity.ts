@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany, JoinColumn } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany, JoinColumn, DeleteDateColumn } from 'typeorm';
 import { Owner } from './Owner.entity';
 import { Breed } from './Breed.entity';
 
@@ -25,6 +25,9 @@ export class Pet {
 
     @Column({ nullable: true })
     photo?: string
+
+    @DeleteDateColumn({ name: 'deleted_at', type: 'timestamp', nullable: true })
+    deletedAt: Date
 
     //relationships
 
