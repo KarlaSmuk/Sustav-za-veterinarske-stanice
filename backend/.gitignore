@@ -13,6 +13,8 @@ dist-ssr
 *.local
 psql
 
+.env
+
 
 # Editor directories and files
 .vscode/*
