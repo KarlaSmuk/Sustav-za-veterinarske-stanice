@@ -15,7 +15,6 @@ export const getOwners: RequestHandler = async (req, res) => {
             .where('ownerUser.deletedAt IS NULL')
             .getMany();
 
-        console.log(owners)
         res.status(201).json({
             success: true,
             message: owners
