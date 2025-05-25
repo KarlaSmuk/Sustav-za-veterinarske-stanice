@@ -5,6 +5,7 @@ import { Breed } from '../models/entities/Breed.entity';
 import { Owner } from '../models/entities/Owner.entity';
 import { Pet } from '../models/entities/Pet.entity';
 import { Species } from '../models/entities/Species.entity';
+import { NotFoundError } from '../middlewares/errorHandling';
 
 const ownerRepository = AppDataSource.getRepository(Owner)
 const speciesRepository = AppDataSource.getRepository(Species)
@@ -211,4 +212,29 @@ export const getBreedsBySpeciesId: RequestHandler = async (req, res) => {
     }
 
 
+};
+
+export const deletePet: RequestHandler = async (req, res) => {
+    const { petId } = req.params;
+
+    try {
+        const pet = await petRepository.findOne({ where: { id: petId } });
+        if (!pet) {
+            throw new NotFoundError('Pet not found');
+        }
+
+        await petRepository.softDelete(pet.id);
+
+        res.status(200).json({
+            success: true,
+            message: `Pet ${petId} deleted`
+        });
+    } catch (error: unknown) {
+        if (error instanceof Error) {
+            res.status(400).send({
+                success: false,
+                message: error.message
+            });
+        }
+    }
 };

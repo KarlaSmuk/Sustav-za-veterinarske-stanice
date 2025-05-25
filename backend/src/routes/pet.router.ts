@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { validateRequest } from "../middlewares/validateRequest";
-import { createPet, getBreedsBySpeciesId, getPetsByOwnerId, getSpecies, updatePetNeutered } from "../controllers/pet.controller";
+import { createPet, deletePet, getBreedsBySpeciesId, getPetsByOwnerId, getSpecies, updatePetNeutered } from "../controllers/pet.controller";
 import { CreatePetDto } from "../models/dtos/CreatePet.dto";
 
 const petRoute = Router();
@@ -13,6 +13,7 @@ petRoute.post("/:ownerId", validateRequest(CreatePetDto), createPet);
 petRoute.get("/:ownerId", getPetsByOwnerId);
 
 petRoute.patch("/updatePetNeutered/:petId", updatePetNeutered)
+petRoute.delete("/:petId", deletePet)
 
 
 export default petRoute;
