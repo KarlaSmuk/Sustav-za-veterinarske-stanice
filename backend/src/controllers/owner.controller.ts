@@ -106,3 +106,28 @@ export const updateOwner: RequestHandler = async (req, res) => {
         }
     }
 };
+
+export const deleteOwner: RequestHandler = async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        const owner = await ownerRepository.findOne({ where: { id } });
+        if (!owner) {
+            throw new NotFoundError('Owner not found');
+        }
+
+        await userRepository.softDelete(owner.userId);
+
+        res.status(200).json({
+            success: true,
+            message: `Owner ${id} deleted`
+        });
+    } catch (error: unknown) {
+        if (error instanceof Error) {
+            res.status(400).send({
+                success: false,
+                message: error.message
+            });
+        }
+    }
+};

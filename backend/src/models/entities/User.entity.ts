@@ -1,5 +1,5 @@
 import { UserRole } from '../enums/roles.enum';
-import { Entity, PrimaryGeneratedColumn, Column, ValueTransformer } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ValueTransformer, DeleteDateColumn } from 'typeorm';
 
 const base64Transformer: ValueTransformer = {
     to: (val?: string) => val ? Buffer.from(val, 'base64') : null,
@@ -44,7 +44,7 @@ export class User {
     })
     role: UserRole
 
-    @Column({ name: 'deleted_at', type: 'timestamp', default: null })
+    @DeleteDateColumn({ name: 'deleted_at', type: 'timestamp', nullable: true })
     deletedAt: Date
 
     constructor(email: string, firstName: string, lastName: string, phone: string, role: UserRole, password?: string) {
