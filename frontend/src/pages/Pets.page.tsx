@@ -17,7 +17,11 @@ import { useParams } from "react-router-dom";
 import { type MouseEvent, useEffect, useState } from "react";
 import { AddIcon, CheckIcon, DeleteIcon } from "@chakra-ui/icons";
 import type { Pet } from "@/api/types/api.types";
-import { getPetsByOwnerId, updatePetNeutered } from "@/api/pets.service";
+import {
+  deletePetById,
+  getPetsByOwnerId,
+  updatePetNeutered,
+} from "@/api/pets.service";
 import CreatePetModal from "@/components/modals/CreatePetModal";
 
 export default function Pets() {
@@ -73,7 +77,24 @@ export default function Pets() {
   };
 
   const deletePet = async (petId: string) => {
-    setPets((prev) => prev.filter((pet) => pet.id !== petId));
+    try {
+      console.log(petId);
+      const response = await deletePetById(petId);
+      if (response.success) {
+        setPets((prev) => prev.filter((pet) => pet.id !== petId));
+        toast({
+          title: "Ljubimac uspješno izbrisan!",
+          status: "success",
+        });
+      } else {
+        throw new Error("Brisanje nije uspjelo");
+      }
+    } catch {
+      toast({
+        title: "Greška prilikom brisanja ljubimca.",
+        status: "error",
+      });
+    }
   };
 
   const handlePetNeutered = async (
@@ -83,7 +104,7 @@ export default function Pets() {
     e.preventDefault();
     try {
       const response = await updatePetNeutered(petId);
-      updatePet(response.message);
+      updatePet(response);
     } catch (error) {
       console.log("Error updating status:", error);
       toast({
@@ -168,19 +189,16 @@ export default function Pets() {
                         </Text>
                       </Flex>
                     </Flex>
-                    <Flex direction={"column"} gap={2}>
-                      <Button
-                        onClick={() => deletePet(pet.id)}
-                        rightIcon={<DeleteIcon />}
-                        width={"100px"}
-                        height={"25px"}
-                        textColor={"black"}
-                        mr={10}
-                        size="sm"
-                      >
-                        Izbriši
-                      </Button>
-                    </Flex>
+                    <Button
+                      onClick={() => deletePet(pet.id)}
+                      rightIcon={<DeleteIcon />}
+                      width={"100px"}
+                      height={"25px"}
+                      textColor={"black"}
+                      size="sm"
+                    >
+                      Izbriši
+                    </Button>
                   </Flex>
                 </Flex>
               </CardHeader>

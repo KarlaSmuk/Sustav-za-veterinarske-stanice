@@ -54,3 +54,8 @@ export const updatePetNeutered = async (petId: string) => {
         throw error;
     }
 };
+
+export const deletePetById = async (petId: string) => {
+    const response = await axios.delete(`${import.meta.env.VITE_API_URL}/api/pet/${petId}`);
+    return response.data;
+};
