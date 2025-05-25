@@ -7,19 +7,13 @@ export class Owner {
     @PrimaryGeneratedColumn("uuid")
     id: string
 
-    @Column({ name: 'user_id' })
-    userId: string;
-
     //relationships
 
     @OneToOne(() => User)
     @JoinColumn({ name: 'user_id' })
     user: User;
 
-
     constructor(user: User) {
         this.user = user;
     }
-
-
 }
