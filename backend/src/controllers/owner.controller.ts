@@ -1,34 +1,22 @@
 import { RequestHandler } from "express";
-import { Owner } from "../models/entities/Owner.entity";
-import { AppDataSource } from "../config/db";
+import { OwnerService } from "../services/owner.service";
 
-const ownerRepository = AppDataSource.getRepository(Owner)
+const ownerService = new OwnerService();
 
 export const getOwners: RequestHandler = async (req, res) => {
-
     try {
+        const owners = await ownerService.getActiveOwners();
 
-        const owners = await ownerRepository
-            .createQueryBuilder('owner')
-            .innerJoinAndSelect('owner.user', 'ownerUser')
-            .select(['owner', 'ownerUser'])
-            .where('ownerUser.deletedAt IS NULL')
-            .getMany();
-
-        res.status(201).json({
+        res.status(200).json({
             success: true,
             message: owners
         });
-
     } catch (error: unknown) {
         if (error instanceof Error) {
-            console.log(error)
             res.status(400).send({
                 success: false,
                 message: error.message
             });
         }
     }
-
-
 };
