@@ -10,7 +10,6 @@ export interface User {
 
 export interface Owner {
     id: string;
-    userId: string;
     user: User;
 }
 

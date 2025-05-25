@@ -70,7 +70,7 @@ export default function Owners() {
   const updateOwner = (updatedUser: User) => {
     setOwnersData((prev) =>
       prev.map((owner) =>
-        owner.userId === updatedUser.id
+        owner.user.id === updatedUser.id
           ? {
               ...owner,
               user: updatedUser,
@@ -91,7 +91,7 @@ export default function Owners() {
       await deleteUser(id);
 
       setOwnersData((prev) => {
-        const updatedOwners = prev.filter((owner) => owner.userId !== id);
+        const updatedOwners = prev.filter((owner) => owner.user.id !== id);
 
         if (updatedOwners.length <= 10) {
           setOwnersListPage(10);
@@ -188,7 +188,7 @@ export default function Owners() {
                         icon={<EditIcon />}
                         onClick={(e) => {
                           e.stopPropagation();
-                          setSelectedUserId(owner.userId);
+                          setSelectedUserId(owner.user.id);
                           onUpdateOpen();
                         }}
                         boxSize={6}
@@ -198,7 +198,7 @@ export default function Owners() {
                       />
                       <IconButton
                         icon={<DeleteIcon />}
-                        onClick={handleDelete(owner.userId)}
+                        onClick={handleDelete(owner.user.id)}
                         boxSize={6}
                         color={"red"}
                         marginLeft={7}
